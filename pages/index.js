@@ -1,65 +1,51 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from 'react'
+import Link from 'next/link'
+import {useAuth} from '../auth'
+import Container from '../components/Container'
+import {Flex, Box, Button, Text, Heading, Stack} from '@chakra-ui/react'
 
 export default function Home() {
+  const {user} = useAuth()
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+    <Container>
+      <Flex>
+        <Box w={500} p={4} my={12} mx='auto'>
+          <Heading as='h2' textAlign='center'>
+            Welcome to the home page..
+          </Heading>
+          <Text mt={8} textAlign='center'>{`User ID: ${
+            user ? user.uid : 'No user signed in'
+          }`}</Text>
+          <Stack
+            mt={8}
+            alignItems='center'
+            justifyContent='center'
+            isInline
+            width='100%'
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+            <Button
+              variant='solid'
+              colorScheme='blue'
+              width='100%'
+              isDisabled={!user}
+            >
+              <Link href='/authenticated'>
+                <a>Go to authenticated route</a>
+              </Link>
+            </Button>
+            <Button
+              variant='solid'
+              colorScheme='green'
+              width='100%'
+              isDisabled={user}
+            >
+              <Link href='/login'>
+                <a>Login</a>
+              </Link>
+            </Button>
+          </Stack>
+        </Box>
+      </Flex>
+    </Container>
   )
 }
